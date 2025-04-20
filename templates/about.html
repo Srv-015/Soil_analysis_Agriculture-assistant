@@ -1,0 +1,313 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<!-- With this CDN version -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+  /* === About Page Styles === */
+  .about-hero {
+    background: linear-gradient(rgba(58, 70, 51, 0.8), rgba(58, 70, 51, 0.9)), 
+                url('../static/images/farm-bg.jpg');
+    background-size: cover;
+    padding: 80px 20px;
+    text-align: center;
+    color: white;
+  }
+
+  .about-hero h1 {
+    font-family: "Space Mono", monospace;
+    font-size: 2.8rem;
+    margin-bottom: 20px;
+    color: #ffbd00;
+  }
+
+  .about-hero p {
+    font-family: "Syne", sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.2rem;
+    line-height: 1.6;
+  }
+
+  /* Video Section */
+  .video-demo {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    padding: 60px 20px;
+    margin: 50px 0;
+    text-align: center;
+    border-top: 3px solid #ffbd00;
+    border-bottom: 3px solid #ffbd00;
+  }
+
+  .video-demo h2 {
+    color: #ffbd00;
+    font-family: "Space Mono", monospace;
+    margin-bottom: 30px;
+    font-size: 2.2rem;
+  }
+
+  .video-container {
+    max-width: 800px;
+    margin: 0 auto;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+
+  video {
+    width: 100%;
+    display: block;
+  }
+
+  .qr-section {
+    font-family: "Space Mono", monospace;
+    margin-top: 30px;
+  }
+
+  .qr-code {
+    width: 150px;
+    margin: 20px auto;
+    padding: 10px;
+    background: white;
+    border-radius: 10px;
+  }
+
+  /* Features Grid - Updated Order */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .feature-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 30px;
+    border: 1px solid rgba(255, 189, 0, 0.2);
+    transition: transform 0.3s ease;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 189, 0, 0.05);
+  }
+
+  .feature-icon {
+    font-size: 2.5rem;
+    color: #ffbd00;
+    margin-bottom: 20px;
+  }
+
+  .feature-card h3 {
+    font-family: "Space Mono", monospace;
+    color: #ffbd00;
+    margin-bottom: 15px;
+  }
+
+  .feature-card p {
+    font-family: "Syne", sans-serif;
+    line-height: 1.6;
+  }
+
+  /* Soil Type Section */
+  .soil-type-section {
+    font-family: "Space Mono", monospace;
+    background: rgba(255, 189, 0, 0.05);
+    padding: 60px 20px;
+    text-align: center;
+    border-top: 1px solid rgba(255, 189, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 189, 0, 0.3);
+  }
+
+  .soil-type-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 40px auto;
+  }
+
+  .soil-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+  }
+
+  .soil-card:hover {
+    transform: translateY(-10px);
+  }
+
+  .soil-image {
+    height: 180px;
+    overflow: hidden;
+  }
+
+  .soil-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .soil-card:hover .soil-image img {
+    transform: scale(1.1);
+  }
+
+  .soil-info {
+    padding: 20px;
+    background: #3a4633;
+    color: white;
+    font-family: "Syne", sans-serif;
+  }
+
+  .soil-info h3 {
+    color: #ffbd00;
+    font-family: "Space Mono", monospace;
+    margin-bottom: 10px;
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .about-hero h1 {
+      font-size: 2.2rem;
+    }
+    
+    .video-demo {
+      padding: 40px 15px;
+    }
+    
+    .features, .soil-type-cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<!-- Hero Section -->
+<section class="about-hero">
+  <h1>AI for Smarter Farming</h1>
+  <p>Free digital tools to boost your crop yields using soil science - no lab tests required</p>
+</section>
+
+<!-- Video Demo -->
+<section class="video-demo">
+  <h2><i class="fas fa-play-circle"></i> See How It Works</h2>
+  <div class="video-container">
+    <video controls poster="{{ url_for('static', filename='images/video-poster.jpg') }}">
+      <source src="{{ url_for('static', filename='videos/soil-explainer.mp4') }}" type="video/mp4">
+      Your browser doesn't support videos. <a href="/guide">Read our text guide</a> instead.
+    </video>
+  </div>
+  
+  <div class="qr-section">
+    <p>Share this with fellow farmers:</p>
+    <div class="qr-code">
+      <img src="{{ url_for('static', filename='images/QR_Code.png') }}" alt="Scan for Soil Analysis Tool" width="150">
+    </div>
+    <p>Scan to try the soil analyzer</p>
+  </div>
+</section>
+
+<!-- Features Grid in Specified Order -->
+<section class="features">
+  <!-- 1. Soil Health Report -->
+  <div class="feature-card">
+    <div class="feature-icon">
+      <i class="fas fa-flask"></i>
+    </div>
+    <h3>Soil Health Report</h3>
+    <p>Enter your soil's N-P-K values, pH, and location to get instant analysis and crop suggestions tailored to your land.</p>
+  </div>
+  
+  <!-- 2. Fertilizer Savings -->
+  <div class="feature-card">
+    <div class="feature-icon">
+      <i class="fas fa-rupee-sign"></i>
+    </div>
+    <h3>Fertilizer Savings</h3>
+    <p>Prevent wasteful spending - get exact fertilizer recommendations based on your crop's needs.</p>
+  </div>
+  
+  <!-- 3. Disease Detective -->
+  <div class="feature-card">
+    <div class="feature-icon">
+      <i class="fas fa-bug"></i>
+    </div>
+    <h3>Disease Detective</h3>
+    <p>Upload a photo of diseased crops and receive diagnosis with organic and chemical treatment options.</p>
+  </div>
+  
+  <!-- 4. Soil Type Analysis -->
+  <div class="feature-card">
+    <div class="feature-icon">
+      <i class="fas fa-map-marked-alt"></i>
+    </div>
+    <h3>Soil Type Analysis</h3>
+    <p>Upload a soil photo to identify its type (Alluvial/Black/Red/Clay) and get customized farming advice.</p>
+  </div>
+</section>
+
+<!-- Soil Type Visual Showcase -->
+<section class="soil-type-section">
+  <h2><i class="fas fa-map-marked-alt"></i> Soil Type Analysis</h2>
+  <p style="max-width: 800px; margin: 0 auto 30px;">
+    Identify your soil type visually and discover optimal crops for each:
+  </p>
+  
+  <div class="soil-type-cards">
+    <div class="soil-card">
+      <div class="soil-image">
+        <img src="{{ url_for('static', filename='images/aluvialsoil.jpg') }}" alt="Alluvial Soil">
+      </div>
+      <div class="soil-info">
+        <h3>Alluvial Soil</h3>
+        <p>Best for: Wheat, Rice, Maize, Sugarcane</p>
+      </div>
+    </div>
+    
+    <div class="soil-card">
+      <div class="soil-image">
+        <img src="{{ url_for('static', filename='images/blacksoil.jpg') }}" alt="Black Soil">
+      </div>
+      <div class="soil-info">
+        <h3>Black Soil</h3>
+        <p>Best for: Cotton, Soybean, Sorghum</p>
+      </div>
+    </div>
+    
+    <div class="soil-card">
+      <div class="soil-image">
+        <img src="{{ url_for('static', filename='images/redsoil.jpg') }}" alt="Red Soil">
+      </div>
+      <div class="soil-info">
+        <h3>Red Soil</h3>
+        <p>Best for: Millet, Groundnut, Potato, oranges</p>
+      </div>
+    </div>
+    
+    <div class="soil-card">
+      <div class="soil-image">
+        <img src="{{ url_for('static', filename='images/claysoil.jpg') }}" alt="Clay Soil">
+      </div>
+      <div class="soil-info">
+        <h3>Clay Soil</h3>
+        <p>Best for: Cabbage, Lettuce, Chard</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Future Section -->
+<section style="text-align: center; padding: 50px 20px; background: rgba(56, 176, 0, 0.1);">
+  <h2 style="font-family: 'Space Mono', monospace; color: #38b000;">Coming Soon</h2>
+  <p style="font-family: 'Syne', sans-serif; max-width: 800px; margin: 20px auto;">
+    <i class="fas fa-seedling"></i> Regional language support (Hindi, Tamil, Telugu) & offline mobile app for remote fields.
+  </p>
+</section>
+{% endblock %}

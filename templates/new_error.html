@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+{% block body %}
+<style>
+  .containe {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    background-color: #f8f9fa; /* Light gray background for better contrast */
+    justify-content: center;
+    align-items: center;
+  }
+  .card {
+    max-width: 600px;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+  }
+  .error-message {
+    color: #dc3545; /* Bootstrap danger red */
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  .prediction {
+    font-style: italic;
+    color: #007bff; /* Bootstrap primary blue */
+  }
+  h1 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+  }
+</style>
+
+<div class="containe">
+  <div class="row">
+    <div class="col-sm py-2 py-md-3">
+      <div class="card card-body">
+        <h1><b>ERROR: Unable to Fetch Weather Data</b></h1>
+        <p>Sorry, we couldn't retrieve weather data for your location. As a fallback, we suggest considering <span class="prediction">{{ prediction }}</span> for your farm.</p>
+        {% if error %}
+          <p class="error-message">Error Details: {{ error }}</p>
+        {% endif %}
+        <a href="/crop-recommend" class="btn btn-primary mt-3">Try Again</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

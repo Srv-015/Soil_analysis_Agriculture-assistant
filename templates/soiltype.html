@@ -1,0 +1,297 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<!-- Add this line for Font Awesome icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+<link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+
+<!-- bootstrap css -->
+<link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css" />
+
+<!-- Google Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=Doto:wght,ROND@900,100&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Syne&display=swap"
+  rel="stylesheet">
+
+
+<!-- <style>
+  html body {
+    background-color: rgb(206, 206, 228);
+  }
+</style>
+<br /><br />
+  <h2 style="text-align: center; margin: 0px;margin-top: 70px; color: black">
+    <b>Find out which disease has been caught by your plant</b>
+  </h2>
+  <br />
+  <br>
+
+<div style="
+    width: 350px;
+    height: 50rem;
+    margin: 0px auto;
+    color: black;
+    border-radius: 25px;
+    padding: 10px 10px;
+    font-weight: bold;
+  ">
+
+  
+
+
+  <form class="form-signin" method=post enctype=multipart/form-data>
+
+    <h2 class="h4 mb-3 font-weight-normal"><b>Please Upload The Image</b></h2>
+    <input type="file" name="file" class="form-control-file" id="inputfile" onchange="preview_image(event)" style="font-weight: bold;">
+    <br>
+    <br>
+    <img id="output-image" class="rounded mx-auto d-block" />
+    <button class="btn btn-lg btn-primary btn-block" type="submit" style="font-weight: bold;">Predict</button>
+
+
+  </form>
+</div> -->
+
+<style>
+  html body {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../static/images/bgcrop4.jpg);
+    background-position: center;
+    background-size: cover;
+    font-family: "Space Mono", monospace;
+    font-weight: 700;
+    font-style: normal;
+    color: #040404;
+    height: 100vh;
+  }
+
+  h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    /* Dark green for agriculture theme */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    margin-bottom: 30px;
+  }
+
+  .disease-container {
+    width: 400px;
+    height: auto;
+    margin: 0px auto;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.15);
+    /* More transparent for glass effect */
+    backdrop-filter: blur(12px);
+    /* Creates the frosted glass effect */
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+    /* More pronounced shadow */
+    border: 1px solid rgba(76, 175, 80, 0.3);
+    /* Subtler border with transparency */
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .form-signin h2 {
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  /* .form-control-file {
+    border-radius: 29px;
+    padding: 10px;
+    font-weight: 500;
+    background: #f5f5f5;
+    border: 1px solid #ccc;
+    width: 100%;
+  } */
+
+  /* Custom file upload styles */
+  .file-upload-wrapper {
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  .file-upload-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px dashed rgba(255, 255, 255, 0.4);
+    border-radius: 29px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .file-upload-label:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+
+  .file-upload-icon {
+    margin-right: 10px;
+    font-size: 1.2rem;
+  }
+
+  .file-upload-input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+
+  .file-name {
+    display: block;
+    margin-top: 8px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  .btn-primary {
+    background: #ffbd00;
+    color: black;
+    font-size: 22px;
+    display: block;
+    margin: 0 auto;
+    padding: 10px;
+    border-radius: 29px;
+    border: none;
+    width: 250px;
+    margin-top: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-family: "Doto", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 900;
+    font-style: normal;
+    font-variation-settings:
+      "ROND" 100;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background: #38b000;
+    color: black;
+    transform: scale(1.05);
+  }
+
+  .btn-submit:active {
+    background-color: #38b000;
+    color: black;
+    transform: translateY(1px);
+    box-shadow: 0 6px 12px rgba(255, 136, 0, 0.5);
+  }
+
+  #output-image {
+    max-width: 100%;
+    max-height: 250px;
+    margin: 20px auto;
+    /* border: 2px solid #000000; Matching green border */
+    border-radius: 10px;
+    display: block;
+  }
+</style>
+<br /><br />
+<h2 style="text-align: center; margin: 0px; margin-top: 70px; color: #ffffff;">
+  <b>Find the sutiable crop for your soil type</b>
+</h2>
+<br />
+<br>
+
+<div class="disease-container">
+  <form class="form-signin" method="post" enctype="multipart/form-data">
+    <h2 class="h4 mb-3 font-weight-normal"><b>Upload Your Plant Image</b></h2>
+    <div class="file-upload-wrapper">
+      <label class="file-upload-label">
+        <i class="fas fa-cloud-upload-alt file-upload-icon"></i>
+        Choose Image
+        <input type="file" name="file" class="file-upload-input" id="inputfile" onchange="preview_image(event)">
+      </label>
+      <div id="file-name" class="file-name"></div>
+    </div>
+
+    <img id="output-image" class="rounded mx-auto d-block" />
+    <button class="btn btn-lg btn-primary btn-block" type="submit" style="font-weight: bold;">Identify</button>
+  </form>
+</div>
+
+<!-- Comming soon message -->
+<div id="comingSoonModal"
+  style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 1000; backdrop-filter: blur(5px);">
+  <div
+    style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(12px); padding: 30px; border-radius: 15px; max-width: 500px; width: 90%; text-align: center; border: 1px solid rgba(255, 255, 255, 0.3);">
+    <i class="fas fa-seedling" style="font-size: 3rem; color: #ffbd00; margin-bottom: 20px;"></i>
+    <h3 style="color: white; margin-bottom: 15px;">Soil Analysis Coming Soon!</h3>
+    <p style="color: rgba(255, 255, 255, 0.9); line-height: 1.6; margin-bottom: 25px;">
+      I am currently working on the soil type identification feature. This functionality is under development and will
+      be available soon. Thank you for your patience!
+    </p>
+    <button onclick="closeModal()"
+      style="background: #ffbd00; color: black; border: none; padding: 10px 25px; border-radius: 29px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">
+      UNDERSTOOD
+    </button>
+  </div>
+</div>
+
+<!-- For Image Output -->
+<script type="text/javascript">
+  function preview_image(event) {
+    var reader = new FileReader();
+    reader.onload = function () {
+      var output = document.getElementById('output-image')
+      output.src = reader.result;
+    }
+    reader.readAsDataURL(event.target.files[0]);
+
+    // Show selected file name
+    var fileName = event.target.files[0].name;
+    document.getElementById('file-name').textContent = fileName;
+  }
+</script>
+
+
+<!-- for comming soon feature -->
+<script>
+  // Modify your existing form to include the onsubmit handler
+  document.querySelector('.form-signin').onsubmit = function (e) {
+    e.preventDefault();
+    document.getElementById('comingSoonModal').style.display = 'block';
+    return false;
+  };
+
+  function closeModal() {
+    document.getElementById('comingSoonModal').style.display = 'none';
+  }
+
+  // Keep your existing preview_image function
+  function preview_image(event) {
+    var reader = new FileReader();
+    reader.onload = function () {
+      var output = document.getElementById('output-image')
+      output.src = reader.result;
+    }
+    reader.readAsDataURL(event.target.files[0]);
+
+    // Show selected file name
+    var fileName = event.target.files[0].name;
+    document.getElementById('file-name').textContent = fileName;
+  }
+</script>
+
+
+</div>
+{% endblock %}

@@ -1,110 +1,189 @@
 {% extends 'layout.html' %}
-
-{% block body %}
-<!-- banner -->
-<section class="banner_w3lspvt" id="home">
-	<div class="csslider infinity" id="slider1">
-	
-				<div class="banner-top">
-					<div class="overlay">
-						<div class="container">
-							<div class="w3layouts-banner-info text-center">
-								<h3 class="text-wh">Harvestify</h3>
-								<h4 class="text-wh mx-auto my-4"><b>Get informed decisions about your farming strategy.</b></h4>
-								<br>
-								<h4 class="text-wh mx-auto my-4"><strong> Here are some questions we'll answer</strong></h4>
-								<p class="text-li mx-auto mt-2">
-									1. What crop to plant here? <br>
-									2. What fertilizer to use? <br>
-									3. Which disease do your crop have?<br>
-									4. How to cure the disease?</p>
-							</div>
-						</div>
-					</div>
-				</div>
-	</div>
-</section>
-<!-- //banner -->
-
-<!-- core values -->
-<section class="core-value py-5">
-	<div class="container py-md-4">
-		<h3 class="heading mb-sm-5 mb-4 text-center"> About Us</h3>
-		<div class="row core-grids">
-			<div class="col-lg-6 core-left">
-				<img src="{{ url_for('static', filename='images/core.jpg') }}" class="img-fluid" alt="" />
-			</div>
-			<div class="col-lg-6 core-right">
-				<h3 class="mt-4">Improving Agriculture, Improving Lives, Cultivating Crops To Make Farmers Increase
-					Profit.</h3>
-				<p class="mt-3">We use state-of-the-art machine learning and deep learning technologies to help you
-					guide through
-					the entire farming process. Make informed decisions to understand the demographics of your area,
-					understand the
-					factors that affect your crop and keep them healthy for a super awesome successful yield.</p>
-			</div>
-		</div>
-	</div>
-</section>
-<!-- //core values -->
-
-<!-- Products & Services -->
-<section class="blog py-5">
-	<div class="container py-md-5">
-		<h3 class="heading mb-sm-5 mb-4 text-center"> Our Services</h3>
-		<div class="row blog-grids">
-			<div class="col-lg-4 col-md-6 blog-left mb-lg-0 mb-sm-5 pb-lg-0 pb-5">
-				<img src="{{ url_for('static', filename='images/s3.jpg') }}" class="img-fluid" alt="" />
-				<a href="{{ url_for('crop_recommend') }}">
-					<div class="blog-info">
-
-						<h4>Crop</h4>
-
-						<p class="mt-2"> Recommendation about the type of crops to be cultivated which is best suited
-							for the respective conditions</p>
-					</div>
-				</a>
-			</div>
-			<div class="col-lg-4 col-md-6 blog-middle mb-lg-0 mb-sm-5 pb-lg-0 pb-md-5">
-				<img src="{{ url_for('static', filename='images/s2.jpg') }}" class="img-fluid" alt="" />
-				<a href="{{ url_for('fertilizer_recommendation') }}">
-					<div class="blog-info">
-						<h4>Fertilizer</h4>
-						<p class="mt-2">Recommendation about the type of fertilizer best suited for the particular soil
-							and the recommended crop</p>
-					</div>
-				</a>
-			</div>
-			<div class="col-lg-4 col-md-6 blog-right mt-lg-0 mt-5 pt-lg-0 pt-md-5">
-
-				<img src="{{ url_for('static', filename='images/s4.jpg') }}" class="img-fluid" alt="">
-
-				<!-- <img src="images/s4.jpg" class="img-fliud" alt="" /> -->
-				<a href="{{ url_for('disease_prediction') }}">
-					<div class="blog-info">
-						<h4>Crop Disease</h4>
-						<p class="mt-2">Predicting the name and causes of crop disease and suggestions to cure it</p>
-					</div>
-				</a>
-			</div>
-		</div>
-	</div>
-</section>
-<!-- //Products & Services -->
-
-
-<!-- Creating custom grid and hover effect
-<section>
-<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-    <div class="hovereffect">
-        <img class="img-responsive" src="images/s2.jpg" alt="">
-        <div class="overlay">
-           <h2>Hover effect 1</h2>
-           <a class="info" href="#">link here</a>
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourav's Company</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Syne:wght@400..800&display=swap"
+      rel="stylesheet" />
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Syne:wght@400..800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Doto:wght@100..900&family=Syne:wght@400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="login.css">
+<script defer src="script.js"></script>
+  </head>
+  <body>
+    <div class="main-login">
+      <div class="login-container">
+        <span id="closeLogin" class="close-btn">&times;</span>
+        <h2>LOGIN</h2>
+        <input type="text" placeholder="Username">
+        <input type="password" placeholder="Password">
+        <button  class="btn">Login</button>
+        <p class="signup-link">Don't have account? <b>Sign UP</b></p>
+    
     </div>
-</div> -->
+    </div>
+    
+      <!-- <nav class="navbar">
+        <div class="nav-logo">
+            <img src="./img/logo.png" alt="Soil Nation logo">
+            <span>Sourav's Company</span>
+        </div>
+        
+        <ul class="nav-links">
+            <li><button >Home</button></li>
+            <li><button >About</button></li>
+            <li>
+              <button id="login-btn" >Login</button>
+            </li>
+        </ul>
+    
+        <button id="Analyze_btn" class="button-super">Analyze</button>
+    </nav> -->
+    <div id="navbar-container"></div>
+    
+      <div class="first">
+        <div class="overlay"></div>
+        <div>
+          <h1>Discover the Essence of Soil:</h1>
+          <p>Unlock the Secrets of Soil Science for Thriving Plants</p>
+          <a href="analysis.html"><button class="button-super">Analyze My Soil</button></a>
+        </div>
+      </div>
+      <div class="second">
+        <div class="image-container">
+          <img src="./img/img2.png" alt="img2" />
+        </div>
+        <div class="second-left">
+          <h1>About Our Soil</h1>
+          <p>
+            At Our Soil Analysis Company, we are dedicated to providing
+            comprehensive and accurate soil testing services to help gardeners,
+            landscapers, and farmers achieve optimal plant growth and health.
+            Our team of experienced soil scientists utilizes advanced laboratory
+            techniques to analyze the chemical, physical, and biological
+            properties of soil samples.
+          </p>
+          <div class="container">
+            <div class="button">Soil Sampling Process</div>
+            <div class="button">Tailored Recommendations</div>
+            <div class="button">Accurate Test Results</div>
+            <div class="button">Get Your Soil Analyzed</div>
+          </div>
+        </div>
+      </div>
 
+      <div class="third">
+        <div class="third-first">
+          <h1>Nurture Your Plants</h1>
+          <p class="subheading">
+            Discover the Keys to Soil Health: Our Comprehensive Analysis
+            Uncovers the Vital Nutrients, Organic Matter
+          </p>
+          <p class="description">
+            Elevate Your Gardening or Farming Success with Our Precise Soil
+            Analysis. Unlock the Secrets to Optimizing Soil Fertility and
+            Enhancing Plant Vitality
+          </p>
+          <a href="analysis.html"><button class="button-super">Analyze My Soil</button></a>
+        </div>
+        <div class="third-image-content">
+          <img src="./img/img3.png" alt="Growing Plant in Soil" />
+        </div>
+      </div>
+      <div class="fourth">
+        <div class="fourth-top">
+          <div class="text-content">
+            <h1>Unlock the Potential of Your Soil</h1>
+            <p class="subheading">
+              Our Soil Analysis Experts Provide Comprehensive Insights to Help
+              You Cultivate Thriving Plants and
+            </p>
+
+            <div class="info-boxes">
+              <div class="info-box">
+                <div class="icon">🫅🏻</div>
+                <div class="text">
+                  <h3>Personalized Soil Recommendations</h3>
+                  <p>Nutrient Soil</p>
+                </div>
+              </div>
+              <div class="info-box">
+                <div class="icon">🫅🏻</div>
+                <div class="text">
+                  <h3>Optimize Soil pH</h3>
+                  <p>Organic Matter Microbiome</p>
+                </div>
+              </div>
+            </div>
+
+            <a href="analysis.html"><button class="button-super">Analyze My Soil</button></a>
+
+          </div>
+
+          <div class="fourth-image-content">
+            <img src="./img/img4.png" alt="Soil Analysis" />
+          </div>
+        </div>
+        <div class="fourth-bottom">
+          <div class="additional-images">
+            <img src="./img/img5.png" alt="Soil Diagram" />
+            <img src="./img/img6.png" alt="Plant Growth Chart" />
+          </div>
+
+          <div class="fourth-bottom-text">
+            <p class="description">
+              At our soil analysis company, we are dedicated to empowering
+              gardeners, landscapers, and farmers with the knowledge and tools
+              they need to cultivate thriving plants and sustainable landscapes.
+              Our team of experienced soil scientists utilizes advanced laboratory
+              techniques to provide comprehensive and accurate soil testing
+              services, delivering detailed reports that reveal the chemical,
+              physical, and biological properties of your soil.
+            </p>
+  
+            <button class="button-super btn-fix-two">Get Started</button>
+          </div>
+        </div> 
+      </div>
+      <div class="fifth">
+        <div>
+          <h1>Revolutionize Your Soil </h1>
+          <p class="subheading">
+            At our soil analysis company, we believe that understanding the health and composition of your soil is the key to unlocking the true potential of your plants, gardens, and landscapes
+          </p>
+          <p class="description">
+            Personalized Soil Recommendations
+          </p>
+          <p>Optimize Nutrient Levels, pH, and Microbiome for Thriving Plants</p>
+          <a href="analysis.html"><button class="button-super">Analyze My Soil</button></a>
+
+        </div>
+        <div class="fifth-image-content">
+          <img src="./img/img7.png" alt="Growing Plant in Soil" />
+        </div>
+      </div>
+      <div class="sixth"></div>
+    </div>
+
+    <script
+    src="script.js
+    "
+    ></script>
+  </body>
 </html>
-
 {% endblock %}

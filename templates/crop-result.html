@@ -1,19 +1,70 @@
 {% extends 'layout.html' %} {% block body %}
 
 <style>
-  .mt-0 {
+  /* .mt-0 {
   margin-top: 50 !important;
-}
+  }
+  .containe{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    background-color: white;
+    background-image: url(../static/images/bgcrop1.jpg);
+    background-size: cover;
+    justify-content: center;
+    align-items: center;
+  } */
+
+  .containe {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../static/images/bgcrop1.jpg);
+    background-size: cover;
+    background-position: center;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card {
+    background: rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 50px !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2) !important;
+    padding: 40px;
+    text-align: center;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  }
+
+  .card h1 {
+    font-size: 53px;
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 768px) {
+    .card {
+      width: 90%;
+      padding: 1.5rem;
+    }
+    .card h1 {
+      font-size: 1.5rem;
+    }
+  }
 </style>
 
-
-<div class="container py-2 mx-auto my-50 h-10 " style="margin: 12rem;">
+<div class="containe">
   <div class="row">
-      <div class="col-sm py-2 py-md-3">
-          <div class="card card-body" style="justify-content: center;">
-               <h1 class="text-center"><b>You should grow <i>{{ prediction }} </i>in your farm</b></h1>
-          </div>
+    <div class="col-sm py-2 py-md-3">
+      <div class="card card-body" style="justify-content: center">
+        <h1 class="text-center">
+          <b>You should grow <i>"{{ prediction }}" </i>in your farm</b>
+        </h1>
       </div>
+    </div>
   </div>
 </div>
+
 {% endblock %}

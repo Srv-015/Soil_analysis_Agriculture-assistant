@@ -1,17 +1,113 @@
 {% extends 'layout.html' %} {% block body %}
 
+<!-- Google Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Doto:wght,ROND@900,100&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Syne&display=swap"
+  rel="stylesheet"
+/>
 
+<!-- <style>
+  /* .mt-0 {
+  margin-top: 50 !important; */
+  .containe {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    /* background: #000801;
+    background: -webkit-linear-gradient(to right bottom, #000801, #5bab67);
+    background: linear-gradient(to right bottom, #000801, #5bab67); */
+  } -->
 
+<!-- </style>
 
-
-
-<div class="container py-2 mx-auto my-50 h-10 " style="margin: 9rem;">
+<div class="containe">
   <div class="row">
-      <div class="col-sm py-2 py-md-3">
-          <div class="card card-body" style="justify-content: center; background-color:blanchedalmond">
-               <p class="text-center" style="color: black; font-size: 20px;">{{ recommendation }}</p>
-          </div>
+    <div class="col-sm py-2 py-md-3">
+      <div
+        class="card card-body"
+        style="justify-content: center; padding: 40px 60px"
+      >
+        <p
+          class="text-center"
+          style="
+            color: black;
+            word-spacing: 2px;
+            line-height: 35px;
+            font-size: 25px;
+          "
+        >
+          {{ recommendation }}
+        </p>
       </div>
+    </div>
+  </div>
+</div> -->
+
+<style>
+  .containe {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../static/images/fzcrop2.jpg);
+    background-size: cover;
+    background-position: center;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card {
+    background: rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(8px);
+    border-radius: 50px !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2) !important;
+    padding: 40px;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
+    width: 89vw;
+    margin: 0 auto;
+  }
+
+  .card p {
+    font-size: 18px;
+    line-height: 35px;
+    word-spacing: 2px;
+    margin-bottom: 0;
+    font-family: "Space Mono", monospace;
+    font-weight: 600;
+    font-style: normal;
+    padding: 20px 10px;
+    /* text-align: left; */
+  }
+
+  @media (max-width: 768px) {
+    .card {
+      width: 90%;
+      min-width: auto;
+      padding: 30px;
+      border-radius: 30px !important;
+    }
+    .card p {
+      font-size: 20px;
+      line-height: 30px;
+    }
+  }
+</style>
+
+<div class="containe">
+  <div class="row">
+    <div class="col-sm py-2 py-md-3">
+      <div class="card card-body" style="justify-content: center">
+        <p class="text-center">{{ recommendation }}</p>
+      </div>
+    </div>
   </div>
 </div>
+
 {% endblock %}

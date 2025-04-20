@@ -9,15 +9,22 @@ import requests
 import config
 import pickle
 import io
+import random
 import torch
 from torchvision import transforms
 from PIL import Image
 from utils.model import ResNet9
+import json
 # ==============================================================================================
 
 # -------------------------LOADING THE TRAINED MODELS -----------------------------------------------
 
 # Loading plant disease classification model
+
+
+
+
+
 
 disease_classes = ['Apple___Apple_scab',
                    'Apple___Black_rot',
@@ -64,6 +71,7 @@ disease_model.load_state_dict(torch.load(
     disease_model_path, map_location=torch.device('cpu')))
 disease_model.eval()
 
+cropp = ["soyabean", "mango", "tomato", "rasberry", "potato", "pepper", "apple"]
 
 # Loading crop recommendation model
 
@@ -71,32 +79,81 @@ crop_recommendation_model_path = 'models/RandomForest.pkl'
 crop_recommendation_model = pickle.load(
     open(crop_recommendation_model_path, 'rb'))
 
-
 # =========================================================================================
 
 # Custom functions for calculations
 
 
+# def weather_fetch(city_name):
+#     """
+#     Fetch and returns the temperature and humidity of a city
+#     :params: city_name
+#     :return: temperature, humidity
+#     """
+#     api_key = config.weather_api_key
+#     base_url = "https://api.openweathermap.org/data/2.5/weather?"
+
+#     complete_url = base_url + "appid=" + api_key + "&q=" + city_name
+#     response = requests.get(complete_url)
+#     x = response.json()
+
+#     if x["cod"] != "404":
+#         y = x["main"]
+
+#         temperature = round((y["temp"] - 273.15), 2)
+#         humidity = y["humidity"]
+#         return temperature, humidity
+#     else:
+#         return None
+
 def weather_fetch(city_name):
     """
     Fetch and returns the temperature and humidity of a city
     :params: city_name
-    :return: temperature, humidity
+    :return: temperature, humidity (or None if request fails)
     """
     api_key = config.weather_api_key
     base_url = "http://api.openweathermap.org/data/2.5/weather?"
-
     complete_url = base_url + "appid=" + api_key + "&q=" + city_name
-    response = requests.get(complete_url)
-    x = response.json()
 
-    if x["cod"] != "404":
-        y = x["main"]
 
-        temperature = round((y["temp"] - 273.15), 2)
-        humidity = y["humidity"]
+    # Clean and standardize city name
+    # city_name = city_name.strip()
+    # city_key = city_name.lower() 
+     # Define city_key here
+
+
+
+    # Use city ID if available
+    # if city_key in CITY_IDS:
+    #     complete_url = f"{base_url}id={CITY_IDS[city_key]}&appid={api_key}"
+    # else:
+    #     complete_url = f"{base_url}q={city_name},IN&appid={api_key}"
+
+
+
+
+
+    try:
+        response = requests.get(complete_url)
+        x = response.json()
+        print(f"API Response for {city_name}: {x}")
+
+        if x.get("cod") != 200:
+            error_message = x.get('message', 'Unknown error')
+            print(f"Error: {error_message}")
+            return None, error_message
+
+        if "main" not in x:
+            print("'main' key missing in API response!")
+            return None, "'main' key missing in API response"
+
+        temperature = round((x["main"]["temp"] - 273.15), 2)  # Convert Kelvin to Celsius
+        humidity = x["main"]["humidity"]
         return temperature, humidity
-    else:
+
+    except Exception as e:
+        print(f"Weather fetch failed: {str(e)}")
         return None
 
 
@@ -128,20 +185,38 @@ def predict_image(img, model=disease_model):
 
 app = Flask(__name__)
 
+
+
+# Load city IDs
+try:
+    with open("city_ids.json", "r", encoding="utf-8") as f:
+        CITY_IDS = json.load(f)
+except FileNotFoundError:
+    CITY_IDS = {}
+    print("Warning: city_ids.json not found. Falling back to city names.")
+
+
 # render home page
 
 
 @ app.route('/')
 def home():
-    title = 'Harvestify - Home'
-    return render_template('index.html', title=title)
+    return render_template('index2.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html', title='About Us')
+
+@ app.route('/analyze')
+def analyze():
+    return render_template('analysis.html')    
 
 # render crop recommendation form page
 
 
 @ app.route('/crop-recommend')
 def crop_recommend():
-    title = 'Harvestify - Crop Recommendation'
+    title = 'sourav - Crop Recommendation'
     return render_template('crop.html', title=title)
 
 # render fertilizer recommendation form page
@@ -149,13 +224,19 @@ def crop_recommend():
 
 @ app.route('/fertilizer')
 def fertilizer_recommendation():
-    title = 'Harvestify - Fertilizer Suggestion'
+    title = 'sourav - Fertilizer Suggestion'
 
     return render_template('fertilizer.html', title=title)
 
 # render disease prediction input page
 
 
+
+# Render soil type prediction input page
+@app.route('/soil-type')
+def soil_type():
+    title = 'sourav - Soil Type Analysis'
+    return render_template('soiltype.html', title=title)
 
 
 # ===============================================================================================
@@ -167,41 +248,58 @@ def fertilizer_recommendation():
 
 @ app.route('/crop-predict', methods=['POST'])
 def crop_prediction():
-    title = 'Harvestify - Crop Recommendation'
+    title = 'sourav - Crop Recommendation'
 
     if request.method == 'POST':
         N = int(request.form['nitrogen'])
         P = int(request.form['phosphorous'])
-        K = int(request.form['pottasium'])
+        K = int(request.form['potassium'])
         ph = float(request.form['ph'])
         rainfall = float(request.form['rainfall'])
 
         # state = request.form.get("stt")
         city = request.form.get("city")
 
-        if weather_fetch(city) != None:
-            temperature, humidity = weather_fetch(city)
+        # if weather_fetch(city) != None:
+        #     temperature, humidity = weather_fetch(city)
+        #     data = np.array([[N, P, K, temperature, humidity, ph, rainfall]])
+        #     my_prediction = crop_recommendation_model.predict(data)
+        #     final_prediction = my_prediction[0]
+
+        #     return render_template('crop-result.html', prediction=final_prediction, title=title)
+
+        # else:
+        #     index=random.randint(0,len(cropp))
+
+        #     return render_template('new_error.html', prediction=cropp[index], title=title)
+            # this line has to change in future
+
+        weather_data = weather_fetch(city)
+        if weather_data is not None:
+            temperature, humidity = weather_data
             data = np.array([[N, P, K, temperature, humidity, ph, rainfall]])
             my_prediction = crop_recommendation_model.predict(data)
             final_prediction = my_prediction[0]
-
+            print(f"N: {N}, P: {P}, K: {K}, ph: {ph}, rainfall: {rainfall}, temp: {temperature}, humidity: {humidity}")
             return render_template('crop-result.html', prediction=final_prediction, title=title)
-
+            
         else:
-
-            return render_template('try_again.html', title=title)
+            # Fallback: Use random crop if weather API fails
+            random_crop = random.choice(cropp)
+            # return render_template('new_error.html', prediction=random_crop, title=title)
+            return render_template('new_error.html', prediction=random_crop, error=error_message, title=title)
 
 # render fertilizer recommendation result page
 
 
 @ app.route('/fertilizer-predict', methods=['POST'])
 def fert_recommend():
-    title = 'Harvestify - Fertilizer Suggestion'
+    title = 'sourav - Fertilizer Suggestion'
 
     crop_name = str(request.form['cropname'])
     N = int(request.form['nitrogen'])
     P = int(request.form['phosphorous'])
-    K = int(request.form['pottasium'])
+    K = int(request.form['potassium'])
     # ph = float(request.form['ph'])
 
     df = pd.read_csv('Data/fertilizer.csv')
@@ -240,7 +338,7 @@ def fert_recommend():
 
 @app.route('/disease-predict', methods=['GET', 'POST'])
 def disease_prediction():
-    title = 'Harvestify - Disease Detection'
+    title = 'sourav - Disease Detection'
 
     if request.method == 'POST':
         if 'file' not in request.files:
@@ -262,4 +360,4 @@ def disease_prediction():
 
 # ===============================================================================================
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)

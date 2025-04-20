@@ -1,0 +1,204 @@
+{% extends 'layout.html' %} {% block body %}
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+
+  body {
+    background-color: rgb(178, 41, 41);
+    background: url("../static/images/bgmain.jpg") no-repeat center/cover fixed;
+    z-index: 100;
+    text-align: center;
+    height: 100vh;
+    width: 100%;
+  }
+
+  .services {
+    position: relative;
+    height: 100%;
+    z-index: 100;
+  }
+  .main-login {
+    z-index: -100;
+  }
+  h2 {
+    background-image: url(../static/images/textbg3.png);
+    background-position: 1%;
+    background-repeat: no-repeat;
+    /* background-size:100px; */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: absolute;
+    top: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: "Space Mono", monospace;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 80px;
+    margin: 20px auto;
+    animation: ani 5s linear infinite alternate;
+  }
+  @keyframes ani {
+    to {
+      background-position: 100%;
+    }
+  }
+
+  .service-container {
+    display: flex;
+
+    padding: 0 100px;
+    min-height: 85%;
+    width: 100%;
+    margin: auto;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  .service-container a {
+    text-decoration: none;
+  }
+  .service-card {
+    flex: 1;
+    margin-top: 210px;
+    height: 400px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    max-width: 300px;
+    text-align: left;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    position: relative;
+  }
+
+  /* Hover Effects */
+  .service-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Add image zoom effect */
+  .service-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.5s ease-in-out;
+  }
+  /* Image zoom on hover */
+  .service-card:hover img {
+    transform: scale(1.1);
+  }
+
+  .service-content {
+    padding: 20px;
+  }
+
+  /* Text color change on hover */
+  .service-content h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #333;
+    transition: color 0.3s ease-in-out;
+  }
+  .service-card:hover h3 {
+    color: #007bff; /* Change title color on hover */
+  }
+  /* Subtle glow effect */
+  .service-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+  .service-card:hover::before {
+    opacity: 1;
+  }
+
+  .service-content p {
+    font-family: "Space Mono", monospace;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    color: #555;
+  }
+</style>
+<section class="services">
+  <h2>Our Services</h2>
+  <div class="service-container">
+    <a href="{{ url_for('crop_recommend') }}">
+      <div class="service-card">
+        <img
+          src="{{ url_for('static', filename='images/crop.jpg') }}"
+          alt="Crop"
+        />
+        <div class="service-content">
+          <h3>CROP</h3>
+          <p>
+            Recommendation about the type of crops to be cultivated which is
+            best suited for the respective conditions.
+          </p>
+        </div>
+      </div>
+    </a>
+    <a href="{{ url_for('fertilizer_recommendation') }}">
+      <div class="service-card">
+        <img
+          src="{{ url_for('static', filename='images/fertilizer.jpg') }}"
+          alt="Fertilizer"
+        />
+        <div class="service-content">
+          <h3>FERTILIZER</h3>
+          <p>
+            Recommendation about the type of fertilizer best suited for the
+            particular soil and the recommended crop.
+          </p>
+        </div>
+      </div>
+    </a>
+    <a href="{{ url_for('disease_prediction') }}">
+      <div class="service-card">
+        <img
+          src="{{ url_for('static', filename='images/diseases.jpg') }}"
+          alt="Crop Disease"
+        />
+        <div class="service-content">
+          <h3>CROP DISEASE</h3>
+          <p>
+            Predicting the name and causes of crop disease and suggestions to
+            cure it.
+          </p>
+        </div>
+      </div>
+    </a>
+
+    <a href="{{ url_for('soil_type') }}">
+      <div class="service-card">
+        <img
+          src="{{ url_for('static', filename='images/SoilType.jpg') }}"
+          alt="Soil Type"
+        />
+        <div class="service-content">
+          <h3>SOIL TYPE</h3>
+          <p>
+            Analysis of soil type and its properties to determine the best crop
+            and fertilizer recommendations.
+          </p>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+{% endblock %}
