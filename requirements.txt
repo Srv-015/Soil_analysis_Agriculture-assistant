@@ -1,14 +1,6 @@
+--only-binary=:all:  # Force pre-built wheels
+numpy==1.19.5
+scipy==1.10.1
 Flask==1.1.4
 gunicorn==20.0.4
-numpy==1.19.5
-pandas==1.1.5
-scikit-learn==0.23.2
-tensorflow==2.3.0
-torch==1.7.1
-torchvision==0.8.2
-matplotlib==3.3.4
 Werkzeug==1.0.1
-protobuf==3.19.6  # Required for TensorFlow 2.3.0
---only-binary=:all:
-scipy==1.10.1  # Last version with Python 3.6 wheels
-numpy==1.19.5
