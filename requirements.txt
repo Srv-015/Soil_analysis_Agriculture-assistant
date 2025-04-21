@@ -9,3 +9,6 @@ torchvision==0.8.2
 matplotlib==3.3.4
 Werkzeug==1.0.1
 protobuf==3.19.6  # Required for TensorFlow 2.3.0
+--only-binary=scipy,numpy
+scipy==1.15.2
+numpy==1.19.5
