@@ -1,6 +1,9 @@
---only-binary=:all:  # Critical for avoiding compilation
-numpy==1.16.6  # Last universal wheel for Python 3.6
-scipy==1.2.3   # Last universal wheel version
+--index-url https://pypi.org/simple/
+--trusted-host pypi.org
+--trusted-host files.pythonhosted.org
+
+numpy==1.19.5 --find-links https://numpy.org/numpy-wheel-staging/
+scipy==1.5.4 --find-links https://pypi.anaconda.org/scipy-wheels-staging/simple
 Flask==1.1.4
 gunicorn==20.0.4
 Werkzeug==1.0.1
