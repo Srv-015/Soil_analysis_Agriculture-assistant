@@ -1,1 +1,1 @@
-python-3.9.18  # Best supported legacy version
+python-3.6.15
