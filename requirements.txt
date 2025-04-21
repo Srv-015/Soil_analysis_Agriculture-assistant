@@ -1,12 +1,5 @@
---index-url https://pypi.org/simple/
---trusted-host pypi.org
---trusted-host files.pythonhosted.org
-
-# Core packages with direct download URLs
 https://files.pythonhosted.org/packages/45/b7/de7b8e67f2232c26af57c205aaad29fe17754f793aafb34a9b1c2dbf0053/numpy-1.19.5-cp36-cp36m-manylinux2010_x86_64.whl
 https://files.pythonhosted.org/packages/5b/7e/8c019d2a5b6a908a62525b7909d92161342a0c0350e307d0f5a0a9b1a3a4/scipy-1.5.4-cp36-cp36m-manylinux1_x86_64.whl
-
-# Pure Python packages
 Flask==1.1.4
 gunicorn==20.0.4
 Werkzeug==1.0.1
